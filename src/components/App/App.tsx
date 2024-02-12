@@ -1,13 +1,5 @@
-
-
 function App() {
-
-
-  return (
-    <>
-      Appавыаыв
-    </>
-  )
+  return <>Appавыаыв</>;
 }
 
-export default App
+export default App;
