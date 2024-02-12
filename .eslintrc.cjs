@@ -10,6 +10,10 @@ module.exports = {
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
+  parserOptions: {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
   plugins: ['react-refresh'],
   rules: {
     "@typescript-eslint/ban-ts-comment": "warn",
@@ -26,6 +30,7 @@ module.exports = {
     "react-hooks/exhaustive-deps": "warn",
     "react/no-array-index-key": "off",
     "no-debugger": "warn",
+    "react/react-in-jsx-scope": "off",
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
