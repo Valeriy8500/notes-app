@@ -1,7 +1,5 @@
-import * as S from './styles';
+import * as S from "./styles";
 
 export const FilterInput = () => {
-    return (
-        <S.CustomizedTextField placeholder=' Поиск' />
-    )
-}
+  return <S.FilterInput placeholder=" Поиск" />;
+};

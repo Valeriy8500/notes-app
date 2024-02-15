@@ -1,6 +1,6 @@
-import * as S from './styles';
-import { Header } from '../header/header';
-import GlobalStyles from '../../styles/global';
+import * as S from "./styles";
+import { Header } from "../header/header";
+import GlobalStyles from "../../styles/global";
 
 export const App = () => {
   return (
@@ -11,6 +11,5 @@ export const App = () => {
 
       <GlobalStyles />
     </>
-  )
-}
-
+  );
+};

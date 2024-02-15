@@ -1,17 +1,17 @@
 import styled from "styled-components";
-import TextField from '@mui/material/TextField';
 
-export const CustomizedTextField = styled(TextField)`
-    margin-left: 10px;
+export const FilterInput = styled.input`
+  margin-left: 50px;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  height: 26px;
 
-  input {
-    padding: 2px;
-    background-color: #fff;
-    border: none;
-    border-radius: 12%;
+  &:hover {
+    border-color: #000;
   }
 
-  input:focus {
-    outline: none;
+  &:focus {
+    border-color: #000;
   }
-`
+`;
