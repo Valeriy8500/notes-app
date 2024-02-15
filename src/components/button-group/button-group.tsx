@@ -9,18 +9,30 @@ export const ButtonGroup = () => {
     console.log("onClipNote");
   };
 
+  const onDeleteNote = () => {
+    console.log("onDeleteNote");
+  };
+
+  const onEditNote = () => {
+    console.log("onEditNote");
+  };
+
+  const onAddList = () => {
+    console.log("onAddList");
+  };
+
   return (
     <>
       <S.CustomizedIconButton onClick={onClipNote} title="Закрепить">
         <ClipIcon />
       </S.CustomizedIconButton>
-      <S.CustomizedIconButton title="Удалить">
+      <S.CustomizedIconButton onClick={onDeleteNote} title="Удалить">
         <DeleteIcon />
       </S.CustomizedIconButton>
-      <S.CustomizedIconButton title="Изменить">
+      <S.CustomizedIconButton onClick={onEditNote} title="Изменить">
         <EditIcon />
       </S.CustomizedIconButton>
-      <S.CustomizedIconButton title="Добавить список">
+      <S.CustomizedIconButton onClick={onAddList} title="Добавить список">
         <ListIcon />
       </S.CustomizedIconButton>
     </>
