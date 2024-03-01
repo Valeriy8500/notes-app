@@ -1,13 +1,15 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
+const initialState: any = {
+    elements: [],
+};
 
 export const notesSlice = createSlice({
-    name: "companies",
+    name: "notes",
     initialState,
     reducers: {
         addNote(state, action: PayloadAction<any>) {
-            console.log('addNote');
+            state.elements.push(action.payload);
         },
     }
 });
