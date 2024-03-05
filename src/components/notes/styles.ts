@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const Note = styled.div`
   width: 100%;
-  background-color: #000;
-  color: #fff;
+  background-color: #e1e1df;
+  color: #000;
 `;
 
 export const Title = styled.h3`

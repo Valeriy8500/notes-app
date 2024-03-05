@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import AddIcon from '@mui/icons-material/AddCircle';
+import AddIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/DriveFileRenameOutline";
 import ClipIcon from "@mui/icons-material/FilePresent";
@@ -10,14 +10,14 @@ import { addNote } from "../../redux/notes";
 
 export const ButtonGroup = () => {
   const dispatch = useAppDispatch();
-  
+
   const onAddNote = () => {
     console.log("onAddNote");
 
     const newNote = {
       id: Math.random(),
-      noteName: 'Новая заметка',
-      currDateTime: getCurrDateTime()
+      noteName: "Новая заметка",
+      currDateTime: getCurrDateTime(),
     };
 
     dispatch(addNote(newNote));

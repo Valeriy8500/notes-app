@@ -4,15 +4,15 @@ import * as S from "./styles";
 
 export const Notes = () => {
   const notes = useAppSelector(selectorNotes);
-  console.log('notes: ', notes);
+  console.log("notes: ", notes);
 
   return (
     <>
-      {notes.map((i: any) => {
+      {notes.map((item: any) => {
         return (
-          <S.Note>
-            <S.Title>{i.noteName}</S.Title>
-            <S.DateTime>{i.currDateTime}</S.DateTime>
+          <S.Note key={item.id}>
+            <S.Title>{item.noteName}</S.Title>
+            <S.DateTime>{item.currDateTime}</S.DateTime>
           </S.Note>
         );
       })}

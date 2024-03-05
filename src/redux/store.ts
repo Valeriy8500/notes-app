@@ -3,11 +3,11 @@ import { notesSlice } from "./notes/notes.slice";
 import { notesSliceReducer } from "./notes";
 
 export const rootReducer = combineReducers({
-    [notesSlice.name]: notesSliceReducer
-  });
+  [notesSlice.name]: notesSliceReducer,
+});
 
 export const store = configureStore({
-    reducer: rootReducer
+  reducer: rootReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
