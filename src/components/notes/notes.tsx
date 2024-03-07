@@ -1,14 +1,16 @@
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectorNotes } from "../../redux/selectors";
 import { INote } from "../../types/types";
+import { selectNote } from "../../redux/notes";
 import * as S from "./styles";
 
 export const Notes = () => {
   const notes = useAppSelector(selectorNotes);
+  const dispatch = useAppDispatch();
   console.log("notes: ", notes);
 
-  const selectNote = () => {
-
+  const onSelectNote = (id: string) => {
+    dispatch(selectNote(id));
   };
 
   return (
@@ -18,7 +20,7 @@ export const Notes = () => {
           <S.Note
             key={item.id}
             $isSelected={item.isSelected}
-            onClick={selectNote}
+            onClick={() => onSelectNote(item.id)}
           >
             <S.IconBlock></S.IconBlock>
             <S.MainBlock>

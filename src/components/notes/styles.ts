@@ -9,6 +9,10 @@ export const Note = styled.div<NoteProps>`
   background-color: ${props => props.$isSelected ? '#e1e1df' : '#fff'};
   color: #000;
   display: flex;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const IconBlock = styled.div`
