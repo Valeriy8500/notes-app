@@ -7,6 +7,7 @@ import ListIcon from "@mui/icons-material/CheckCircleOutline";
 import { useAppDispatch } from "../../redux/hooks";
 import { getCurrDateTime } from "../../shared/shared-functions";
 import { addNote } from "../../redux/notes";
+import { v4 as uuidv4 } from 'uuid';
 
 export const ButtonGroup = () => {
   const dispatch = useAppDispatch();
@@ -15,7 +16,7 @@ export const ButtonGroup = () => {
     console.log("onAddNote");
 
     const newNote = {
-      id: Math.random(),
+      id: uuidv4(),
       noteName: "Новая заметка",
       currDateTime: getCurrDateTime(),
     };
