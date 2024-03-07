@@ -8,17 +8,19 @@ import { useAppDispatch } from "../../redux/hooks";
 import { getCurrDateTime } from "../../shared/shared-functions";
 import { addNote } from "../../redux/notes";
 import { v4 as uuidv4 } from 'uuid';
+import { INote } from "../../types/types";
 
 export const ButtonGroup = () => {
   const dispatch = useAppDispatch();
 
-  const onAddNote = () => {
-    console.log("onAddNote");
-
-    const newNote = {
+  const onAddNote = (): void => {
+    const newNote: INote = {
       id: uuidv4(),
       noteName: "Новая заметка",
       currDateTime: getCurrDateTime(),
+      content: {
+        title: "Новая заметка"
+      }
     };
 
     dispatch(addNote(newNote));
