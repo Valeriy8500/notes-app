@@ -7,11 +7,19 @@ export const Notes = () => {
   const notes = useAppSelector(selectorNotes);
   console.log("notes: ", notes);
 
+  const selectNote = () => {
+
+  };
+
   return (
     <>
       {notes.map((item: INote) => {
         return (
-          <S.Note key={item.id}>
+          <S.Note
+            key={item.id}
+            $isSelected={item.isSelected}
+            onClick={selectNote}
+          >
             <S.IconBlock></S.IconBlock>
             <S.MainBlock>
               <S.Title>{item.noteName}</S.Title>

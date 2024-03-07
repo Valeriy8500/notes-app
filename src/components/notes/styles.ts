@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
-export const Note = styled.div`
+interface NoteProps {
+  $isSelected: boolean;
+}
+
+export const Note = styled.div<NoteProps>`
   width: 100%;
-  background-color: #e1e1df;
+  background-color: ${props => props.$isSelected ? '#e1e1df' : '#fff'};
   color: #000;
   display: flex;
 `;
@@ -24,4 +28,5 @@ export const Title = styled.h4`
 
 export const DateTime = styled.div`
   width: 100%;
+  font-size: small;
 `;

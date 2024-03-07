@@ -6,7 +6,6 @@ import * as S from "./styles";
 
 export const NoteEditor = () => {
   const notes = useAppSelector(selectorNotes);
-  console.log('formatDate: ', formatDate('07.08.2024, 17:47'));
 
   return (
     <>

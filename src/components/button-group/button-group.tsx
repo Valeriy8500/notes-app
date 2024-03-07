@@ -18,6 +18,7 @@ export const ButtonGroup = () => {
       id: uuidv4(),
       noteName: "Новая заметка",
       currDateTime: getCurrDateTime(),
+      isSelected: true,
       content: {
         title: "Новая заметка"
       }
