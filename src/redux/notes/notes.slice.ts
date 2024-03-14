@@ -11,13 +11,10 @@ export const notesSlice = createSlice({
   reducers: {
     addNote(state, action: PayloadAction<INote>) {
       state.elements.push(action.payload);
-      state.elements = state.elements.map(item =>
-        item.id !== action.payload.id ? {...item, isSelected: false} : item
-      );
     },
-    selectNote(state, action: PayloadAction<string>) {
+    selectNote(state, action: PayloadAction<INote>) {
       state.elements = state.elements.map(item =>
-        item.id === action.payload ? {...item, isSelected: true} : item
+        item.id === action.payload.id ? {...item, isSelected: true} : {...item, isSelected: false}
       );
     },
   },

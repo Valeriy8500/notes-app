@@ -6,7 +6,7 @@ import ClipIcon from "@mui/icons-material/FilePresent";
 import ListIcon from "@mui/icons-material/CheckCircleOutline";
 import { useAppDispatch } from "../../redux/hooks";
 import { getCurrDateTime } from "../../shared/shared-functions";
-import { addNote } from "../../redux/notes";
+import { addNote, selectNote } from "../../redux/notes";
 import { v4 as uuidv4 } from 'uuid';
 import { INote } from "../../types/types";
 
@@ -25,6 +25,7 @@ export const ButtonGroup = () => {
     };
 
     dispatch(addNote(newNote));
+    dispatch(selectNote(newNote));
   };
 
   const onClipNote = () => {

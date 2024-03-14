@@ -9,8 +9,8 @@ export const Notes = () => {
   const dispatch = useAppDispatch();
   console.log("notes: ", notes);
 
-  const onSelectNote = (id: string) => {
-    dispatch(selectNote(id));
+  const onSelectNote = (item: INote) => {
+    dispatch(selectNote(item));
   };
 
   return (
@@ -20,7 +20,7 @@ export const Notes = () => {
           <S.Note
             key={item.id}
             $isSelected={item.isSelected}
-            onClick={() => onSelectNote(item.id)}
+            onClick={() => onSelectNote(item)}
           >
             <S.IconBlock></S.IconBlock>
             <S.MainBlock>
