@@ -16,5 +16,4 @@ export const DateTime = styled.h3`
   font-size: small;
 `;
 
-export const Title = styled.h3`
-`;
+export const Title = styled.h3``;

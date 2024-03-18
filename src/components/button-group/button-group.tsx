@@ -7,7 +7,7 @@ import ListIcon from "@mui/icons-material/CheckCircleOutline";
 import { useAppDispatch } from "../../redux/hooks";
 import { getCurrDateTime } from "../../shared/shared-functions";
 import { addNote, selectNote } from "../../redux/notes";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { INote } from "../../types/types";
 
 export const ButtonGroup = () => {
@@ -20,29 +20,21 @@ export const ButtonGroup = () => {
       currDateTime: getCurrDateTime(),
       isSelected: true,
       content: {
-        title: "Новая заметка"
-      }
+        title: "Новая заметка",
+      },
     };
 
     dispatch(addNote(newNote));
     dispatch(selectNote(newNote));
   };
 
-  const onClipNote = () => {
-    console.log("onClipNote");
-  };
+  const onClipNote = () => {};
 
-  const onDeleteNote = () => {
-    console.log("onDeleteNote");
-  };
+  const onDeleteNote = () => {};
 
-  const onEditNote = () => {
-    console.log("onEditNote");
-  };
+  const onEditNote = () => {};
 
-  const onAddList = () => {
-    console.log("onAddList");
-  };
+  const onAddList = () => {};
 
   return (
     <>

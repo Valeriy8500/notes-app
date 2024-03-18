@@ -6,7 +6,7 @@ interface NoteProps {
 
 export const Note = styled.div<NoteProps>`
   width: 100%;
-  background-color: ${props => props.$isSelected ? '#e1e1df' : '#fff'};
+  background-color: ${props => (props.$isSelected ? "#e1e1df" : "#fff")};
   color: #000;
   display: flex;
 

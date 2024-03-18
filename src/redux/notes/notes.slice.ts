@@ -14,7 +14,9 @@ export const notesSlice = createSlice({
     },
     selectNote(state, action: PayloadAction<INote>) {
       state.elements = state.elements.map(item =>
-        item.id === action.payload.id ? {...item, isSelected: true} : {...item, isSelected: false}
+        item.id === action.payload.id
+          ? { ...item, isSelected: true }
+          : { ...item, isSelected: false }
       );
     },
   },
