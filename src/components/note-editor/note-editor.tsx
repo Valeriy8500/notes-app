@@ -1,11 +1,15 @@
+import { useState } from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { selectorNotes } from "../../redux/selectors";
 import { formatDate } from "../../shared/shared-functions";
 import { INote } from "../../types/types";
+import { createEditor } from 'slate';
+import { Slate, Editable, withReact } from 'slate-react';
 import * as S from "./styles";
 
 export const NoteEditor = () => {
   const notes = useAppSelector(selectorNotes);
+  const [editor] = useState(() => withReact(createEditor()))
 
   return (
     <>

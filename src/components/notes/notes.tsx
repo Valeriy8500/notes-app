@@ -17,7 +17,11 @@ export const Notes = () => {
     <>
       {notes.map((item: INote) => {
         return (
-          <S.Note key={item.id} $isSelected={item.isSelected} onClick={() => onSelectNote(item)}>
+          <S.Note
+            key={item.id}
+            $isSelected={item.isSelected}
+            onClick={() => onSelectNote(item)}
+          >
             <S.IconBlock></S.IconBlock>
             <S.MainBlock>
               <S.Title>{item.noteName}</S.Title>
