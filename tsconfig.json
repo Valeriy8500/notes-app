@@ -22,6 +22,9 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
+  "exclude": [
+    "rich-text.tsx"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
