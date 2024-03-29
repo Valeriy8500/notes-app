@@ -13,7 +13,7 @@ import { INote } from "../../types/types";
 export const ButtonGroup = () => {
   const dispatch = useAppDispatch();
 
-  const onAddNote = (): void => {
+  const onAddNote = () => {
     const newNote: INote = {
       id: uuidv4(),
       noteName: "Новая заметка",
