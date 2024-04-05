@@ -1,27 +1,25 @@
+import React from 'react'
 import { useCallback, useMemo } from "react";
-import isHotkey from "is-hotkey";
-import { Editable, withReact, useSlate, Slate } from "slate-react";
-import { Editor, Transforms, createEditor, Descendant, Element as SlateElement } from "slate";
+import { Editable, withReact, useSlate, Slate, ReactEditor } from "slate-react";
+import { Editor, Transforms, createEditor, Element as SlateElement } from "slate";
 import { withHistory } from "slate-history";
-import React, { ReactNode, Ref, PropsWithChildren } from 'react'
-import ReactDOM from 'react-dom';
 
 // import { Button, Icon, Toolbar } from "../components";
 
-const HOTKEYS = {
-  "mod+b": "bold",
-  "mod+i": "italic",
-  "mod+u": "underline",
-  "mod+`": "code",
-};
+// const HOTKEYS = {
+//   "mod+b": "bold",
+//   "mod+i": "italic",
+//   "mod+u": "underline",
+//   "mod+`": "code",
+// };
 
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
 
-const RichTextExample = () => {
-  const renderElement = useCallback((props) => <Element {...props} />, []);
-  const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
-  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+const RichText = () => {
+  const renderElement = useCallback((props: any) => <Element {...props} />, []);
+  const renderLeaf = useCallback((props: any) => <Leaf {...props} />, []);
+  const editor = useMemo<ReactEditor>(() => withHistory(withReact(createEditor())), []);
 
   return (
     <Slate editor={editor} initialValue={initialValue}>
@@ -43,7 +41,7 @@ const RichTextExample = () => {
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
-        placeholder="Enter some rich text…"
+        placeholder="Новая заметка"
         spellCheck
         autoFocus
         onKeyDown={e => {
@@ -54,7 +52,7 @@ const RichTextExample = () => {
   );
 };
 
-const toggleBlock = (editor, format) => {
+const toggleBlock = (editor: any, format: any) => {
   const isActive = isBlockActive(
     editor,
     format,
@@ -71,7 +69,8 @@ const toggleBlock = (editor, format) => {
       !TEXT_ALIGN_TYPES.includes(format),
     split: true,
   });
-  let newProperties;
+  let newProperties: any;
+
   if (TEXT_ALIGN_TYPES.includes(format)) {
     newProperties = {
       align: isActive ? undefined : format,
@@ -89,26 +88,38 @@ const toggleBlock = (editor, format) => {
   }
 };
 
-const isBlockActive = (editor, format, blockType = "type") => {
+const toggleMark = (editor: any, format: any) => {
+  const isActive = isMarkActive(editor, format)
+
+  if (isActive) {
+    Editor.removeMark(editor, format)
+  } else {
+    Editor.addMark(editor, format, true)
+  }
+};
+
+const isBlockActive = (editor: any, format: any, blockType: any = "type") => {
   const { selection } = editor;
   if (!selection) return false;
 
   const [match] = Array.from(
     Editor.nodes(editor, {
       at: Editor.unhangRange(editor, selection),
-      match: n => !Editor.isEditor(n) && SlateElement.isElement(n) && n[blockType] === format,
+      match: (n: any) => !Editor.isEditor(n) && SlateElement.isElement(n) && n[blockType] === format,
     })
   );
 
   return !!match;
 };
 
-const isMarkActive = (editor, format) => {
+const isMarkActive = (editor: any, format: any) => {
   const marks = Editor.marks(editor);
   return marks ? marks[format] === true : false;
 };
 
-const Element = ({ attributes, children, element }) => {
+const Element = ({ attributes, children, element }: 
+  { attributes: any; children: React.ReactNode; element: any }) => {
+
   const style = { textAlign: element.align };
   switch (element.type) {
     case "block-quote":
@@ -156,7 +167,7 @@ const Element = ({ attributes, children, element }) => {
   }
 };
 
-const Leaf = ({ attributes, children, leaf }) => {
+const Leaf = ({ attributes, children, leaf }: any) => {
   if (leaf.bold) {
     children = <strong>{children}</strong>;
   }
@@ -176,11 +187,14 @@ const Leaf = ({ attributes, children, leaf }) => {
   return <span {...attributes}>{children}</span>;
 };
 
-const BlockButton = ({ format, icon }) => {
+const BlockButton = ({ format, icon }: 
+  { format: string; icon: string }) => {
   const editor = useSlate();
+  const isActive = isBlockActive(editor, format, TEXT_ALIGN_TYPES.includes(format) ? "align" : "type");
+  
   return (
     <button
-      active={isBlockActive(editor, format, TEXT_ALIGN_TYPES.includes(format) ? "align" : "type")}
+      style={isActive ? {backgroundColor: 'blue'} : undefined}
       onMouseDown={event => {
         event.preventDefault();
         toggleBlock(editor, format);
@@ -191,11 +205,14 @@ const BlockButton = ({ format, icon }) => {
   );
 };
 
-const MarkButton = ({ format, icon }) => {
+const MarkButton = ({ format, icon }: 
+  { format: string; icon: string }) => {
   const editor = useSlate();
+  const isActive = isMarkActive(editor, format);
+
   return (
     <button
-      active={isMarkActive(editor, format)}
+      style={isActive ? {backgroundColor: 'red'} : undefined}
       onMouseDown={event => {
         event.preventDefault();
         toggleMark(editor, format);
@@ -208,38 +225,9 @@ const MarkButton = ({ format, icon }) => {
 
 const initialValue = [
   {
-    type: "paragraph",
-    children: [
-      { text: "This is editable " },
-      { text: "rich", bold: true },
-      { text: " text, " },
-      { text: "much", italic: true },
-      { text: " better than a " },
-      { text: "<textarea>", code: true },
-      { text: "!" },
-    ],
-  },
-  {
-    type: "paragraph",
-    children: [
-      {
-        text: "Since it's rich text, you can do things like turn a selection of text ",
-      },
-      { text: "bold", bold: true },
-      {
-        text: ", or add a semantically rendered block quote in the middle of the page, like this:",
-      },
-    ],
-  },
-  {
-    type: "block-quote",
-    children: [{ text: "A wise quote." }],
-  },
-  {
-    type: "paragraph",
-    align: "center",
-    children: [{ text: "Try it out for yourself!" }],
+    type: 'paragraph',
+    children: [{ text: "" }],
   },
 ];
 
-export default RichTextExample;
+export default RichText;
