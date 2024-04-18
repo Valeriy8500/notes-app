@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
-import { Editable, withReact, useSlate, Slate, ReactEditor } from "slate-react";
-import { Editor, Transforms, createEditor, Element as SlateElement } from "slate";
+import { Editable, withReact, useSlate, Slate, ReactEditor, RenderElementProps, RenderLeafProps } from "slate-react";
+import { Editor, Transforms, createEditor, Element as SlateElement, BaseEditor, BaseElement, BaseText } from "slate";
 import { withHistory } from "slate-history";
 
 // import { Button, Icon, Toolbar } from "../components";
@@ -8,9 +8,26 @@ import { withHistory } from "slate-history";
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
 
+interface CustomSlateElement extends SlateElement {
+  type: string;
+  align?: string;
+}
+
+interface CustomBaseElement extends BaseElement {
+  type: string;
+  align?: any | undefined;
+}
+
+interface CustomBaseTextElement extends BaseText {
+  bold: string;
+  code: string;
+  italic: string;
+  underline: string;
+}
+
 const RichText = () => {
-  const renderElement = useCallback((props: any) => <Element {...props} />, []);
-  const renderLeaf = useCallback((props: any) => <Leaf {...props} />, []);
+  const renderElement = useCallback((props: RenderElementProps) => <Element {...props} />, []);
+  const renderLeaf = useCallback((props: RenderLeafProps) => <Leaf {...props} />, []);
   const editor = useMemo<ReactEditor>(() => withHistory(withReact(createEditor())), []);
 
   return (
@@ -44,7 +61,7 @@ const RichText = () => {
   );
 };
 
-const toggleBlock = (editor: any, format: string) => {
+const toggleBlock = (editor: BaseEditor, format: string) => {
   const isActive = isBlockActive(
     editor,
     format,
@@ -54,15 +71,20 @@ const toggleBlock = (editor: any, format: string) => {
   const isList = LIST_TYPES.includes(format);
 
   Transforms.unwrapNodes(editor, {
-    match: n =>
-      !Editor.isEditor(n) &&
-      SlateElement.isElement(n) &&
-      LIST_TYPES.includes(n.type) &&
-      !TEXT_ALIGN_TYPES.includes(format),
+    match: (node) => {
+      const n = node as CustomSlateElement;
+
+      return (
+        !Editor.isEditor(n) &&
+        SlateElement.isElement(n) &&
+        LIST_TYPES.includes(n.type) &&
+        !TEXT_ALIGN_TYPES.includes(format)
+      );
+    },
     split: true,
   });
 
-  let newProperties: any;
+  let newProperties: Partial<CustomSlateElement>;
 
   if (TEXT_ALIGN_TYPES.includes(format)) {
     newProperties = {
@@ -73,15 +95,15 @@ const toggleBlock = (editor: any, format: string) => {
       type: isActive ? "paragraph" : isList ? "list-item" : format,
     };
   }
-  Transforms.setNodes<SlateElement>(editor, newProperties);
+  Transforms.setNodes<CustomSlateElement>(editor, newProperties);
 
   if (!isActive && isList) {
-    const block = { type: format, children: [] };
+    const block: CustomSlateElement = { type: format, children: [] };
     Transforms.wrapNodes(editor, block);
   }
 };
 
-const toggleMark = (editor: any, format: string) => {
+const toggleMark = (editor: BaseEditor, format: string) => {
   const isActive = isMarkActive(editor, format)
 
   if (isActive) {
@@ -91,7 +113,7 @@ const toggleMark = (editor: any, format: string) => {
   }
 };
 
-const isBlockActive = (editor: any, format: string, blockType = "type") => {
+const isBlockActive = (editor: BaseEditor, format: string, blockType = "type") => {
   const { selection } = editor;
   if (!selection) return false;
 
@@ -99,8 +121,7 @@ const isBlockActive = (editor: any, format: string, blockType = "type") => {
     Editor.nodes(editor, {
       at: Editor.unhangRange(editor, selection),
       match: (n) => {
-        console.log('node: ', n);
-        return !Editor.isEditor(n) && SlateElement.isElement(n) && n[blockType] === format
+        return !Editor.isEditor(n) && SlateElement.isElement(n) && (n as any)[blockType] === format;
       }
     })
   );
@@ -108,15 +129,16 @@ const isBlockActive = (editor: any, format: string, blockType = "type") => {
   return !!match;
 };
 
-const isMarkActive = (editor: any, format: string) => {
+const isMarkActive = (editor: BaseEditor, format: string) => {
   const marks: any = Editor.marks(editor);
   return marks ? marks[format] === true : false;
 };
 
-const Element = ({ attributes, children, element }: any) => {
+const Element = ({ attributes, children, element }: RenderElementProps) => {
+  const el = element as CustomBaseElement;
+  const style = { textAlign: el.align };
 
-  const style = { textAlign: element.align };
-  switch (element.type) {
+  switch (el.type) {
     case "block-quote":
       return (
         <blockquote style={style} {...attributes}>
@@ -162,20 +184,22 @@ const Element = ({ attributes, children, element }: any) => {
   }
 };
 
-const Leaf = ({ attributes, children, leaf }: any) => {
-  if (leaf.bold) {
+const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
+  const customLeaf = leaf as CustomBaseTextElement;
+
+  if (customLeaf.bold) {
     children = <strong>{children}</strong>;
   }
 
-  if (leaf.code) {
+  if (customLeaf.code) {
     children = <code>{children}</code>;
   }
 
-  if (leaf.italic) {
+  if (customLeaf.italic) {
     children = <em>{children}</em>;
   }
 
-  if (leaf.underline) {
+  if (customLeaf.underline) {
     children = <u>{children}</u>;
   }
 
