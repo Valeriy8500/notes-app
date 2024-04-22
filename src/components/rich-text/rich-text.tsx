@@ -1,29 +1,10 @@
 import { useCallback, useMemo } from "react";
 import { Editable, withReact, useSlate, Slate, ReactEditor, RenderElementProps, RenderLeafProps } from "slate-react";
-import { Editor, Transforms, createEditor, Element as SlateElement, BaseEditor, BaseElement, BaseText } from "slate";
+import { Editor, Transforms, createEditor, Element as SlateElement, BaseEditor } from "slate";
+import { CustomBaseElement, CustomBaseTextElement, CustomSlateElement } from "../../types/types";
 import { withHistory } from "slate-history";
-
-// import { Button, Icon, Toolbar } from "../components";
-
-const LIST_TYPES = ["numbered-list", "bulleted-list"];
-const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
-
-interface CustomSlateElement extends SlateElement {
-  type: string;
-  align?: string;
-}
-
-interface CustomBaseElement extends BaseElement {
-  type: string;
-  align?: any | undefined;
-}
-
-interface CustomBaseTextElement extends BaseText {
-  bold: string;
-  code: string;
-  italic: string;
-  underline: string;
-}
+import { LIST_TYPES, TEXT_ALIGN_TYPES } from "../../constans/constans";
+import { Button, Icon, Toolbar } from "./components";
 
 const RichText = () => {
   const renderElement = useCallback((props: RenderElementProps) => <Element {...props} />, []);
@@ -32,7 +13,7 @@ const RichText = () => {
 
   return (
     <Slate editor={editor} initialValue={initialValue}>
-      <div>
+      <Toolbar>
         <MarkButton format="bold" icon="format_bold" />
         <MarkButton format="italic" icon="format_italic" />
         <MarkButton format="underline" icon="format_underlined" />
@@ -46,7 +27,8 @@ const RichText = () => {
         <BlockButton format="center" icon="format_align_center" />
         <BlockButton format="right" icon="format_align_right" />
         <BlockButton format="justify" icon="format_align_justify" />
-      </div>
+      </Toolbar>
+
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
@@ -212,15 +194,15 @@ const BlockButton = ({ format, icon }:
   const isActive = isBlockActive(editor, format, TEXT_ALIGN_TYPES.includes(format) ? "align" : "type");
 
   return (
-    <button
+    <Button
       style={isActive ? { backgroundColor: 'blue' } : undefined}
-      onMouseDown={event => {
+      onMouseDown={(event: any) => {
         event.preventDefault();
         toggleBlock(editor, format);
       }}
     >
-      {/* <Icon>{icon}</Icon> */}
-    </button>
+      <Icon>{icon}</Icon>
+    </Button>
   );
 };
 
@@ -230,15 +212,15 @@ const MarkButton = ({ format, icon }:
   const isActive = isMarkActive(editor, format);
 
   return (
-    <button
+    <Button
       style={isActive ? { backgroundColor: 'red' } : undefined}
-      onMouseDown={event => {
+      onMouseDown={(event: any) => {
         event.preventDefault();
         toggleMark(editor, format);
       }}
     >
-      {/* <Icon>{icon}</Icon> */}
-    </button>
+      <Icon>{icon}</Icon>
+    </Button>
   );
 };
 
