@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { Editable, withReact, useSlate, Slate, ReactEditor, RenderElementProps, RenderLeafProps } from "slate-react";
 import { Editor, Transforms, createEditor, Element as SlateElement, BaseEditor } from "slate";
-import { CustomBaseElement, CustomBaseTextElement, CustomSlateElement } from "../../types/types";
+import { ICustomSlateElement, ICustomBaseElement, ICustomBaseTextElement, IMarkButtonProps, IBlockButtonProps } from "../../types/types";
 import { withHistory } from "slate-history";
 import { LIST_TYPES, TEXT_ALIGN_TYPES } from "../../constans/constans";
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
@@ -73,7 +73,7 @@ const toggleBlock = (editor: BaseEditor, format: string) => {
 
   Transforms.unwrapNodes(editor, {
     match: (node) => {
-      const n = node as CustomSlateElement;
+      const n = node as ICustomSlateElement;
 
       return (
         !Editor.isEditor(n) &&
@@ -85,7 +85,7 @@ const toggleBlock = (editor: BaseEditor, format: string) => {
     split: true,
   });
 
-  let newProperties: Partial<CustomSlateElement>;
+  let newProperties: Partial<ICustomSlateElement>;
 
   if (TEXT_ALIGN_TYPES.includes(format)) {
     newProperties = {
@@ -96,10 +96,10 @@ const toggleBlock = (editor: BaseEditor, format: string) => {
       type: isActive ? "paragraph" : isList ? "list-item" : format,
     };
   }
-  Transforms.setNodes<CustomSlateElement>(editor, newProperties);
+  Transforms.setNodes<ICustomSlateElement>(editor, newProperties);
 
   if (!isActive && isList) {
-    const block: CustomSlateElement = { type: format, children: [] };
+    const block: ICustomSlateElement = { type: format, children: [] };
     Transforms.wrapNodes(editor, block);
   }
 };
@@ -136,7 +136,7 @@ const isMarkActive = (editor: BaseEditor, format: string) => {
 };
 
 const Element = ({ attributes, children, element }: RenderElementProps) => {
-  const el = element as CustomBaseElement;
+  const el = element as ICustomBaseElement;
   const style = { textAlign: el.align };
 
   switch (el.type) {
@@ -186,7 +186,7 @@ const Element = ({ attributes, children, element }: RenderElementProps) => {
 };
 
 const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
-  const customLeaf = leaf as CustomBaseTextElement;
+  const customLeaf = leaf as ICustomBaseTextElement;
 
   if (customLeaf.bold) {
     children = <strong>{children}</strong>;
@@ -207,8 +207,7 @@ const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
   return <span {...attributes}>{children}</span>;
 };
 
-const MarkButton = ({ format, icon }:
-  { format: string; icon: any}) => {
+const MarkButton = ({ format, icon }: IMarkButtonProps) => {
   const editor = useSlate();
   const isActive = isMarkActive(editor, format);
 
@@ -225,8 +224,7 @@ const MarkButton = ({ format, icon }:
   );
 };
 
-const BlockButton = ({ format, icon }:
-  { format: string; icon: any }) => {
+const BlockButton = ({ format, icon }: IBlockButtonProps) => {
   const editor = useSlate();
   const isActive = isBlockActive(editor, format, TEXT_ALIGN_TYPES.includes(format) ? "align" : "type");
 
