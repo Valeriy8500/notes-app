@@ -14,16 +14,7 @@ export const NoteEditor = () => {
         return item.isSelected ? (
           <S.NoteEditor key={item.id}>
             <S.DateTime>{formatDate(item.currDateTime)}</S.DateTime>
-            <S.Title>{item.content.title}</S.Title>
-
-            {/* <Slate editor={editor} initialValue={initialValue}>
-              <Editable
-                onKeyDown={event => {
-                  console.log(event.key);
-                }}
-              />
-            </Slate> */}
-
+            {/* <S.Title>{item.content.title}</S.Title> */}
             <RichText />
           </S.NoteEditor>
         ) : null;

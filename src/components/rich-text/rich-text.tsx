@@ -1,3 +1,4 @@
+import React from "react";
 import { useCallback, useMemo } from "react";
 import { Editable, withReact, useSlate, Slate, ReactEditor, RenderElementProps, RenderLeafProps } from "slate-react";
 import { Editor, Transforms, createEditor, Element as SlateElement, BaseEditor } from "slate";
@@ -214,7 +215,7 @@ const MarkButton = ({ format, icon }: IMarkButtonProps) => {
   return (
     <button
       style={isActive ? { backgroundColor: 'red' } : undefined}
-      onMouseDown={(event: any) => {
+      onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         toggleMark(editor, format);
       }}
@@ -231,7 +232,7 @@ const BlockButton = ({ format, icon }: IBlockButtonProps) => {
   return (
     <button
       style={isActive ? { backgroundColor: 'blue' } : undefined}
-      onMouseDown={(event: any) => {
+      onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         toggleBlock(editor, format);
       }}
