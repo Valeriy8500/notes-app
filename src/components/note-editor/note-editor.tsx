@@ -14,8 +14,7 @@ export const NoteEditor = () => {
         return item.isSelected ? (
           <S.NoteEditor key={item.id}>
             <S.DateTime>{formatDate(item.currDateTime)}</S.DateTime>
-            {/* <S.Title>{item.content.title}</S.Title> */}
-            <RichText />
+            <RichText  />
           </S.NoteEditor>
         ) : null;
       })}

@@ -18,6 +18,8 @@ import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
 import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
 import FormatAlignRightIcon from '@mui/icons-material/FormatAlignRight';
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
+import * as S from "./styles";
+import { Button } from "./components";
 
 const RichText = () => {
   const renderElement = useCallback((props: RenderElementProps) => <Element {...props} />, []);
@@ -210,35 +212,37 @@ const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
 
 const MarkButton = ({ format, icon }: IMarkButtonProps) => {
   const editor = useSlate();
-  const isActive = isMarkActive(editor, format);
 
   return (
-    <button
-      style={isActive ? { backgroundColor: 'red' } : undefined}
+    <Button
+      active={isMarkActive(editor, format)}
       onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         toggleMark(editor, format);
       }}
     >
-      <span>{icon}</span>
-    </button>
+      <S.Icon>{icon}</S.Icon>
+    </Button>
   );
 };
 
 const BlockButton = ({ format, icon }: IBlockButtonProps) => {
   const editor = useSlate();
-  const isActive = isBlockActive(editor, format, TEXT_ALIGN_TYPES.includes(format) ? "align" : "type");
 
   return (
-    <button
-      style={isActive ? { backgroundColor: 'blue' } : undefined}
+    <Button
+      active={isBlockActive(
+        editor,
+        format,
+        TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type'
+      )}
       onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         toggleBlock(editor, format);
       }}
     >
-      <span>{icon}</span>
-    </button>
+      <S.Icon>{icon}</S.Icon>
+    </Button>
   );
 };
 

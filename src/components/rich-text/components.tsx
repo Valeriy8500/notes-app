@@ -1,4 +1,41 @@
-import React, { Ref, PropsWithChildren } from 'react'
+import React, { Ref, PropsWithChildren } from 'react';
+
+interface BaseProps {
+    className: string
+    [key: string]: unknown
+}
+
+export const Button = React.forwardRef(
+    (
+        {
+            className,
+            active,
+            reversed,
+            ...props
+        }: PropsWithChildren<
+            {
+                active: boolean
+                reversed: boolean
+            } & BaseProps
+        >,
+        ref: any
+    ) => {
+        const buttonStyle = {
+            cursor: 'pointer',
+            color: reversed
+                ? active
+                    ? 'white'
+                    : '#aaa'
+                : active
+                    ? 'black'
+                    : '#ccc',
+        };
+
+        return <span {...props} ref={ref} className={className} style={buttonStyle} />;
+    }
+);
+
+// type OrNull<T> = T | null
 
 // interface BaseProps {
 //   className: string
@@ -27,38 +64,38 @@ import React, { Ref, PropsWithChildren } from 'react'
 // )
 
 // export const Button = React.forwardRef(
-//   (
-//     {
-//       className,
-//       active,
-//       reversed,
-//       ...props
-//     }: PropsWithChildren<
-//       {
-//         active: boolean
-//         reversed: boolean
-//       } & BaseProps
-//     >,
-//     ref: Ref<OrNull<HTMLSpanElement>>
-//   ) => (
-//     <span
-//       {...props}
-//       ref={ref}
-//       className={cx(
-//         className,
-//         css`
+//     (
+//         {
+//             className,
+//             active,
+//             reversed,
+//             ...props
+//         }: PropsWithChildren<
+//             {
+//                 active: boolean
+//                 reversed: boolean
+//             } & BaseProps
+//         >,
+//         ref: any
+//     ) => (
+//         <span
+//             {...props}
+//             ref={ref}
+//             className={cx(
+//                 className,
+//                 css`
 //           cursor: pointer;
 //           color: ${reversed
-//             ? active
-//               ? 'white'
-//               : '#aaa'
-//             : active
-//             ? 'black'
-//             : '#ccc'};
+//                         ? active
+//                             ? 'white'
+//                             : '#aaa'
+//                         : active
+//                             ? 'black'
+//                             : '#ccc'};
 //         `
-//       )}
-//     />
-//   )
+//             )}
+//         />
+//     )
 // )
 
 // export const Menu = React.forwardRef(
