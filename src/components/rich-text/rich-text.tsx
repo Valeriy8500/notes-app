@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useCallback, useMemo } from "react";
 import { Editable, withReact, useSlate, Slate, ReactEditor, RenderElementProps, RenderLeafProps } from "slate-react";
-import { Editor, Transforms, createEditor, Element as SlateElement, BaseEditor } from "slate";
+import { Editor, Transforms, createEditor, Element as SlateElement, BaseEditor, Descendant } from "slate";
 import { ICustomSlateElement, ICustomBaseElement, ICustomBaseTextElement, IMarkButtonProps, IBlockButtonProps } from "../../types/types";
 import { withHistory } from "slate-history";
 import { LIST_TYPES, TEXT_ALIGN_TYPES } from "../../constans/constans";
@@ -25,28 +25,37 @@ const RichText = () => {
   const renderElement = useCallback((props: RenderElementProps) => <Element {...props} />, []);
   const renderLeaf = useCallback((props: RenderLeafProps) => <Leaf {...props} />, []);
   const editor = useMemo<ReactEditor>(() => withHistory(withReact(createEditor())), []);
+  const [value, setValue] = useState(initialValue);
+
+  console.log('value: ', value);
 
   useEffect(() => {
-    ReactEditor.focus(editor);
+    if (editor.children.length > 0) {
+      ReactEditor.focus(editor);
+    }
   }, [editor]);
 
+  const handleChange = (newValue: any) => {
+    setValue(newValue);
+  };
+
   return (
-    <Slate editor={editor} initialValue={initialValue}>
-      <div>
-        <MarkButton format="bold" icon={<FormatBoldIcon />} />
-        <MarkButton format="italic" icon={<FormatItalicIcon />} />
-        <MarkButton format="underline" icon={<FormatUnderlinedIcon />} />
-        <MarkButton format="code" icon={<CodeIcon />} />
-        <BlockButton format="heading-one" icon={<LooksOneIcon />} />
-        <BlockButton format="heading-two" icon={<LooksTwoIcon />} />
-        <BlockButton format="block-quote" icon={<FormatQuoteIcon />} />
-        <BlockButton format="numbered-list" icon={<FormatListNumberedIcon />} />
-        <BlockButton format="bulleted-list" icon={<FormatListBulletedIcon />} />
-        <BlockButton format="left" icon={<FormatAlignLeftIcon />} />
-        <BlockButton format="center" icon={<FormatAlignCenterIcon />} />
-        <BlockButton format="right" icon={<FormatAlignRightIcon />} />
-        <BlockButton format="justify" icon={<FormatAlignJustifyIcon />} />
-      </div>
+    <Slate editor={editor} onChange={handleChange} initialValue={value}>
+      <S.Toolbar>
+        <MarkButton format="bold" icon={<FormatBoldIcon style={{ fontSize: 20 }} />} />
+        <MarkButton format="italic" icon={<FormatItalicIcon style={{ fontSize: 20 }} />} />
+        <MarkButton format="underline" icon={<FormatUnderlinedIcon style={{ fontSize: 20 }} />} />
+        <MarkButton format="code" icon={<CodeIcon style={{ fontSize: 20 }} />} />
+        <BlockButton format="heading-one" icon={<LooksOneIcon style={{ fontSize: 20 }} />} />
+        <BlockButton format="heading-two" icon={<LooksTwoIcon style={{ fontSize: 20 }} />} />
+        <BlockButton format="block-quote" icon={<FormatQuoteIcon style={{ fontSize: 20 }} />} />
+        <BlockButton format="numbered-list" icon={<FormatListNumberedIcon style={{ fontSize: 20 }} />} />
+        <BlockButton format="bulleted-list" icon={<FormatListBulletedIcon style={{ fontSize: 20 }} />} />
+        <BlockButton format="left" icon={<FormatAlignLeftIcon style={{ fontSize: 20 }} />} />
+        <BlockButton format="center" icon={<FormatAlignCenterIcon style={{ fontSize: 20 }} />} />
+        <BlockButton format="right" icon={<FormatAlignRightIcon style={{ fontSize: 20 }} />} />
+        <BlockButton format="justify" icon={<FormatAlignJustifyIcon style={{ fontSize: 20 }} />} />
+      </S.Toolbar>
 
       <Editable
         renderElement={renderElement}
@@ -61,7 +70,7 @@ const RichText = () => {
   );
 };
 
-const initialValue = [
+const initialValue: Descendant[] = [
   {
     type: 'paragraph',
     children: [{ text: "" }],
@@ -143,7 +152,7 @@ const isMarkActive = (editor: BaseEditor, format: string) => {
 
 const Element = ({ attributes, children, element }: RenderElementProps) => {
   const el = element as ICustomBaseElement;
-  const style = { textAlign: el.align };
+  const style = { textAlign: el.align, marginLeft: "4px" };
 
   switch (el.type) {
     case "block-quote":

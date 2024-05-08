@@ -1,14 +1,12 @@
-import React, { Ref, PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 
 interface BaseProps {
-    className: string
-    [key: string]: unknown
+    [key: string]: unknown;
 }
 
 export const Button = React.forwardRef(
     (
         {
-            className,
             active,
             reversed,
             ...props
@@ -31,7 +29,7 @@ export const Button = React.forwardRef(
                     : '#ccc',
         };
 
-        return <span {...props} ref={ref} className={className} style={buttonStyle} />;
+        return <span {...props} ref={ref} style={buttonStyle} />;
     }
 );
 
