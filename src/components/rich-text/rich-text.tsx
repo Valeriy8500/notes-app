@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useCallback, useMemo } from "react";
 import { Editable, withReact, useSlate, Slate, ReactEditor, RenderElementProps, RenderLeafProps } from "slate-react";
 import { Editor, Transforms, createEditor, Element as SlateElement, BaseEditor } from "slate";
@@ -26,6 +26,10 @@ const RichText = () => {
   const renderLeaf = useCallback((props: RenderLeafProps) => <Leaf {...props} />, []);
   const editor = useMemo<ReactEditor>(() => withHistory(withReact(createEditor())), []);
 
+  useEffect(() => {
+    ReactEditor.focus(editor);
+  }, [editor]);
+
   return (
     <Slate editor={editor} initialValue={initialValue}>
       <div>
@@ -49,8 +53,7 @@ const RichText = () => {
         renderLeaf={renderLeaf}
         placeholder="Новая заметка"
         spellCheck
-        autoFocus
-        onKeyDown={e => {
+        onKeyDown={(e) => {
           console.log('onKeyDown: ', e.key);
         }}
       />
