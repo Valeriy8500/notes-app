@@ -10,7 +10,7 @@ module.exports = {
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  "parserOptions": {
+  parserOptions: {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
@@ -36,4 +36,9 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  }
 }
