@@ -70,7 +70,7 @@ const RichText = () => {
   );
 };
 
-const initialValue: Descendant[] = [
+const initialValue = [
   {
     type: 'paragraph',
     children: [{ text: "" }],

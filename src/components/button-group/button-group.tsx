@@ -3,7 +3,7 @@ import AddIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/DriveFileRenameOutline";
 import ClipIcon from "@mui/icons-material/FilePresent";
-import ListIcon from "@mui/icons-material/CheckCircleOutline";
+import ListIcon from '@mui/icons-material/Checklist';
 import { useAppDispatch } from "../../redux/hooks";
 import { getCurrDateTime } from "../../shared/shared-functions";
 import { addNote, selectNote } from "../../redux/notes";
@@ -20,7 +20,7 @@ export const ButtonGroup = () => {
       currDateTime: getCurrDateTime(),
       isSelected: true,
       content: {
-        title: "Новая заметка",
+
       },
     };
 
