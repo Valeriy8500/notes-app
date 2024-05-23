@@ -18,6 +18,7 @@ import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
 import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
 import FormatAlignRightIcon from '@mui/icons-material/FormatAlignRight';
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import * as S from "./styles";
 import { Button } from "./components";
 
@@ -39,6 +40,10 @@ const RichText = () => {
     setValue(newValue);
   };
 
+  const onSaveNote = () => {
+    console.log('onSaveNote');
+  };
+
   return (
     <Slate editor={editor} onChange={handleChange} initialValue={value}>
       <S.Toolbar>
@@ -55,6 +60,10 @@ const RichText = () => {
         <BlockButton format="center" icon={<FormatAlignCenterIcon style={{ fontSize: 20 }} />} />
         <BlockButton format="right" icon={<FormatAlignRightIcon style={{ fontSize: 20 }} />} />
         <BlockButton format="justify" icon={<FormatAlignJustifyIcon style={{ fontSize: 20 }} />} />
+
+        <S.CustomizedIconButton onClick={onSaveNote} title="Сохранить">
+          <CheckCircleIcon style={{ fontSize: 25 }} />
+        </S.CustomizedIconButton>
       </S.Toolbar>
 
       <Editable

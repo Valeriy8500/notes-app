@@ -19,5 +19,8 @@ export const notesSlice = createSlice({
           : { ...item, isSelected: false }
       );
     },
+    saveNote(state, action: PayloadAction<INote>) {
+      state.elements.push(action.payload);
+    },
   },
 });
