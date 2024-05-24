@@ -7,7 +7,6 @@ import * as S from "./styles";
 export const Notes = () => {
   const notes = useAppSelector(selectorNotes);
   const dispatch = useAppDispatch();
-  console.log("notes: ", notes);
 
   const onSelectNote = (item: INote) => {
     dispatch(selectNote(item));

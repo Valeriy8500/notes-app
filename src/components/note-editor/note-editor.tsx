@@ -7,6 +7,7 @@ import * as S from "./styles";
 
 export const NoteEditor = () => {
   const notes = useAppSelector(selectorNotes);
+  console.log("notes: ", notes);
 
   return (
     <>
@@ -14,7 +15,7 @@ export const NoteEditor = () => {
         return item.isSelected ? (
           <S.NoteEditor key={item.id}>
             <S.DateTime>{formatDate(item.currDateTime)}</S.DateTime>
-            <RichText  />
+            <RichText noteId={item.id} />
           </S.NoteEditor>
         ) : null;
       })}

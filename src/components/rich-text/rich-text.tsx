@@ -21,12 +21,19 @@ import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import * as S from "./styles";
 import { Button } from "./components";
+import { useAppDispatch } from "../../redux/hooks";
+import { saveNote } from "../../redux/notes";
 
-const RichText = () => {
+interface IRichTextProps {
+  noteId: string;
+}
+
+const RichText = ({ noteId }: IRichTextProps) => {
   const renderElement = useCallback((props: RenderElementProps) => <Element {...props} />, []);
   const renderLeaf = useCallback((props: RenderLeafProps) => <Leaf {...props} />, []);
   const editor = useMemo<ReactEditor>(() => withHistory(withReact(createEditor())), []);
   const [value, setValue] = useState(initialValue);
+  const dispatch = useAppDispatch();
 
   console.log('value: ', value);
 
@@ -42,6 +49,8 @@ const RichText = () => {
 
   const onSaveNote = () => {
     console.log('onSaveNote');
+
+    // dispatch(saveNote(value));
   };
 
   return (
