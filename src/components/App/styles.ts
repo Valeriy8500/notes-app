@@ -8,4 +8,5 @@ export const App = styled.div`
   flex-wrap: wrap;
   margin: 0 auto;
   overflow-y: hidden;
+  border-right: 1px solid rgba(225, 225, 224, 1);
 `;
