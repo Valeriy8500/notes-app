@@ -1,36 +1,30 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from "react";
 
 interface BaseProps {
-    [key: string]: unknown;
+  [key: string]: unknown;
 }
 
 export const Button = React.forwardRef(
-    (
-        {
-            active,
-            reversed,
-            ...props
-        }: PropsWithChildren<
-            {
-                active: boolean
-                reversed: boolean
-            } & BaseProps
-        >,
-        ref: any
-    ) => {
-        const buttonStyle = {
-            cursor: 'pointer',
-            color: reversed
-                ? active
-                    ? 'white'
-                    : '#aaa'
-                : active
-                    ? 'black'
-                    : '#ccc',
-        };
+  (
+    {
+      active,
+      reversed,
+      ...props
+    }: PropsWithChildren<
+      {
+        active: boolean;
+        reversed: boolean;
+      } & BaseProps
+    >,
+    ref: any
+  ) => {
+    const buttonStyle = {
+      cursor: "pointer",
+      color: reversed ? (active ? "white" : "#aaa") : active ? "black" : "#ccc",
+    };
 
-        return <span {...props} ref={ref} style={buttonStyle} />;
-    }
+    return <span {...props} ref={ref} style={buttonStyle} />;
+  }
 );
 
 // type OrNull<T> = T | null

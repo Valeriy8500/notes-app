@@ -7,7 +7,6 @@ import * as S from "./styles";
 
 export const NoteEditor = () => {
   const notes = useAppSelector(selectorNotes);
-  console.log("notes: ", notes);
 
   return (
     <>

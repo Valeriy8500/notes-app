@@ -1,6 +1,10 @@
 import { Element as SlateElement, BaseElement, BaseText } from "slate";
 
-export type noteContent = { [key: string]: any };
+export type noteContent = Array<{
+  children: Array<{ [key: string]: any }>;
+  type: string;
+  [key: string]: any;
+}>;
 
 export interface INote {
   id: string;
@@ -39,4 +43,8 @@ export interface IMarkButtonProps {
 export interface IBlockButtonProps {
   format: string;
   icon: any;
+}
+
+export interface IRichTextProps {
+  noteId: string;
 }

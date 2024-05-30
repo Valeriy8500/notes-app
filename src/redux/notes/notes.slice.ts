@@ -20,7 +20,9 @@ export const notesSlice = createSlice({
       );
     },
     saveNote(state, action: PayloadAction<any>) {
-      state.elements.push(action.payload);
+      state.elements = state.elements.map(item =>
+        item.id === action.payload.id ? { ...item, content: action.payload.content } : item
+      );
     },
   },
 });
