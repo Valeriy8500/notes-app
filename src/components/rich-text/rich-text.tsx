@@ -53,14 +53,14 @@ const RichText = ({ noteId }: IRichTextProps) => {
 
   const dispatch = useAppDispatch();
   const notes = useAppSelector(selectorNotes);
-  
+
   const [value, setValue] = useState<any>(() => {
     const content = notes.filter(i => i.id === noteId)[0].content;
     return !content.length ? initialValue : content;
   });
 
   useEffect(() => {
-    if (editor.children.length > 0) {
+    if (!accessSaveBtn) {
       ReactEditor.focus(editor);
     }
   }, [editor]);
@@ -73,6 +73,8 @@ const RichText = ({ noteId }: IRichTextProps) => {
     const noteData = { id: noteId, content: value };
     dispatch(saveNote(noteData));
   };
+
+  const accessSaveBtn = value.length && value[0].children[0].text !== "";
 
   return (
     <Slate editor={editor} onChange={handleChange} initialValue={value}>
@@ -96,8 +98,15 @@ const RichText = ({ noteId }: IRichTextProps) => {
         <BlockButton format="right" icon={<FormatAlignRightIcon style={{ fontSize: 20 }} />} />
         <BlockButton format="justify" icon={<FormatAlignJustifyIcon style={{ fontSize: 20 }} />} />
 
-        <S.CustomizedIconButton onClick={onSaveNote} title="Сохранить">
-          <CheckCircleIcon style={{ fontSize: 25 }} />
+        <S.CustomizedIconButton
+          onClick={onSaveNote}
+          title="Сохранить"
+          disabled={accessSaveBtn ? false : true}
+        >
+          <CheckCircleIcon
+            style={{ fontSize: 25 }}
+            color={accessSaveBtn ? "success" : "action"}
+          />
         </S.CustomizedIconButton>
       </S.Toolbar>
 

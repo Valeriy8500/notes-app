@@ -28,6 +28,9 @@ export const MainBlock = styled.div`
 export const Title = styled.h4`
   width: 100%;
   margin-bottom: 3px;
+  white-space: nowrap;       
+  overflow: hidden;           
+  text-overflow: ellipsis;
 `;
 
 export const DateTime = styled.div`

@@ -20,8 +20,12 @@ export const notesSlice = createSlice({
       );
     },
     saveNote(state, action: PayloadAction<any>) {
+      const newNoteName = action.payload.content[0].children[0].text;
+
       state.elements = state.elements.map(item =>
-        item.id === action.payload.id ? { ...item, content: action.payload.content } : item
+        item.id === action.payload.id
+          ? { ...item, content: action.payload.content, noteName: newNoteName }
+          : item
       );
     },
     deleteNote(state) {
