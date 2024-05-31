@@ -24,5 +24,10 @@ export const notesSlice = createSlice({
         item.id === action.payload.id ? { ...item, content: action.payload.content } : item
       );
     },
+    deleteNote(state) {
+      state.elements = state.elements.filter(item =>
+        item.isSelected ? false : item
+      );
+    },
   },
 });

@@ -1,5 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { useCallback, useMemo } from "react";
+import { withHistory } from "slate-history";
+import { LIST_TYPES, TEXT_ALIGN_TYPES, initialValue } from "../../constans/constans";
+import FormatBoldIcon from "@mui/icons-material/FormatBold";
+import FormatItalicIcon from "@mui/icons-material/FormatItalic";
+import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
+import CodeIcon from "@mui/icons-material/Code";
+import LooksOneIcon from "@mui/icons-material/LooksOne";
+import LooksTwoIcon from "@mui/icons-material/LooksTwo";
+import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
+import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
+import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
+import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { selectorNotes } from "../../redux/selectors";
+import { Button } from "./components";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { saveNote } from "../../redux/notes";
+import {
+  Editor,
+  Transforms,
+  createEditor,
+  Element as SlateElement,
+  BaseEditor,
+  Descendant,
+} from "slate";
+import {
+  ICustomSlateElement,
+  ICustomBaseElement,
+  ICustomBaseTextElement,
+  IMarkButtonProps,
+  IBlockButtonProps,
+  IRichTextProps,
+} from "../../types/types";
 import {
   Editable,
   withReact,
@@ -9,51 +44,16 @@ import {
   RenderElementProps,
   RenderLeafProps,
 } from "slate-react";
-import {
-  Editor,
-  Transforms,
-  createEditor,
-  Element as SlateElement,
-  BaseEditor,
-  Descendant,
-} from "slate";
-import { withHistory } from "slate-history";
-import { LIST_TYPES, TEXT_ALIGN_TYPES, initialValue } from "../../constans/constans";
-import FormatBoldIcon from "@mui/icons-material/FormatBold";
-import FormatItalicIcon from "@mui/icons-material/FormatItalic";
-import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
-import CodeIcon from "@mui/icons-material/Code";
-import LooksOneIcon from "@mui/icons-material/LooksOne";
-import LooksTwoIcon from "@mui/icons-material/LooksTwo";
-import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
-import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
-import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
-import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
-import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import * as S from "./styles";
-import { Button } from "./components";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { saveNote } from "../../redux/notes";
-import {
-  ICustomSlateElement,
-  ICustomBaseElement,
-  ICustomBaseTextElement,
-  IMarkButtonProps,
-  IBlockButtonProps,
-  IRichTextProps,
-} from "../../types/types";
-import { selectorNotes } from "../../redux/selectors";
 
 const RichText = ({ noteId }: IRichTextProps) => {
   const renderElement = useCallback((props: RenderElementProps) => <Element {...props} />, []);
   const renderLeaf = useCallback((props: RenderLeafProps) => <Leaf {...props} />, []);
   const editor = useMemo<ReactEditor>(() => withHistory(withReact(createEditor())), []);
-  const dispatch = useAppDispatch();
 
+  const dispatch = useAppDispatch();
   const notes = useAppSelector(selectorNotes);
+  
   const [value, setValue] = useState<any>(() => {
     const content = notes.filter(i => i.id === noteId)[0].content;
     return !content.length ? initialValue : content;
@@ -71,7 +71,6 @@ const RichText = ({ noteId }: IRichTextProps) => {
 
   const onSaveNote = () => {
     const noteData = { id: noteId, content: value };
-
     dispatch(saveNote(noteData));
   };
 
@@ -84,7 +83,6 @@ const RichText = ({ noteId }: IRichTextProps) => {
         <MarkButton format="code" icon={<CodeIcon style={{ fontSize: 20 }} />} />
         <BlockButton format="heading-one" icon={<LooksOneIcon style={{ fontSize: 20 }} />} />
         <BlockButton format="heading-two" icon={<LooksTwoIcon style={{ fontSize: 20 }} />} />
-        <BlockButton format="block-quote" icon={<FormatQuoteIcon style={{ fontSize: 20 }} />} />
         <BlockButton
           format="numbered-list"
           icon={<FormatListNumberedIcon style={{ fontSize: 20 }} />}
@@ -191,15 +189,9 @@ const isMarkActive = (editor: BaseEditor, format: string) => {
 
 const Element = ({ attributes, children, element }: RenderElementProps) => {
   const el = element as ICustomBaseElement;
-  const style = { textAlign: el.align, marginLeft: "4px" };
+  const style = { textAlign: el.align };
 
   switch (el.type) {
-    case "block-quote":
-      return (
-        <blockquote style={style} {...attributes}>
-          {children}
-        </blockquote>
-      );
     case "bulleted-list":
       return (
         <ul style={style} {...attributes}>
