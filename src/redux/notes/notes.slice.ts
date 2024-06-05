@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { IInitialState, INote } from "../../types/types";
+import { IInitialState, INote, INoteDataForPayloadAction } from "../../types/types";
 
 const initialState: IInitialState = {
   elements: [],
@@ -19,7 +19,7 @@ export const notesSlice = createSlice({
           : { ...item, isSelected: false }
       );
     },
-    saveNote(state, action: PayloadAction<any>) {
+    saveNote(state, action: PayloadAction<INoteDataForPayloadAction>) {
       const newNoteName = action.payload.content[0].children[0].text;
 
       state.elements = state.elements.map(item =>
@@ -29,9 +29,7 @@ export const notesSlice = createSlice({
       );
     },
     deleteNote(state) {
-      state.elements = state.elements.filter(item =>
-        item.isSelected ? false : item
-      );
+      state.elements = state.elements.filter(item => (item.isSelected ? false : item));
     },
   },
 });

@@ -1,8 +1,7 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, Ref } from "react";
+import { BaseProps } from "../../../types/types";
 
-interface BaseProps {
-  [key: string]: unknown;
-}
+// кнопки для RichText
 
 export const Button = React.forwardRef(
   (
@@ -16,7 +15,7 @@ export const Button = React.forwardRef(
         reversed: boolean;
       } & BaseProps
     >,
-    ref: any
+    ref: Ref<HTMLSpanElement>
   ) => {
     const buttonStyle = {
       cursor: "pointer",
@@ -26,6 +25,10 @@ export const Button = React.forwardRef(
     return <span {...props} ref={ref} style={buttonStyle} />;
   }
 );
+
+Button.displayName = "Button";
+
+// Todo: удалить, если не будет использоваться в дальнейшем
 
 // type OrNull<T> = T | null
 

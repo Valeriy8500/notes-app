@@ -16,17 +16,10 @@ import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
 import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { selectorNotes } from "../../redux/selectors";
-import { Button } from "./components";
+import { Button } from "./components/button";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { saveNote } from "../../redux/notes";
-import {
-  Editor,
-  Transforms,
-  createEditor,
-  Element as SlateElement,
-  BaseEditor,
-  Descendant,
-} from "slate";
+import { Editor, Transforms, createEditor, Element as SlateElement, BaseEditor } from "slate";
 import {
   ICustomSlateElement,
   ICustomBaseElement,
@@ -34,6 +27,7 @@ import {
   IMarkButtonProps,
   IBlockButtonProps,
   IRichTextProps,
+  CustomDescendant,
 } from "../../types/types";
 import {
   Editable,
@@ -54,18 +48,20 @@ const RichText = ({ noteId }: IRichTextProps) => {
   const dispatch = useAppDispatch();
   const notes = useAppSelector(selectorNotes);
 
-  const [value, setValue] = useState<any>(() => {
+  const [value, setValue] = useState<CustomDescendant[]>(() => {
     const content = notes.filter(i => i.id === noteId)[0].content;
     return !content.length ? initialValue : content;
   });
+
+  const accessSaveBtn = value.length && value[0].children[0].text !== "";
 
   useEffect(() => {
     if (!accessSaveBtn) {
       ReactEditor.focus(editor);
     }
-  }, [editor]);
+  }, [editor, accessSaveBtn]);
 
-  const handleChange = (newValue: any) => {
+  const handleChange = (newValue: CustomDescendant[]) => {
     setValue(newValue);
   };
 
@@ -73,8 +69,6 @@ const RichText = ({ noteId }: IRichTextProps) => {
     const noteData = { id: noteId, content: value };
     dispatch(saveNote(noteData));
   };
-
-  const accessSaveBtn = value.length && value[0].children[0].text !== "";
 
   return (
     <Slate editor={editor} onChange={handleChange} initialValue={value}>
@@ -103,10 +97,7 @@ const RichText = ({ noteId }: IRichTextProps) => {
           title="Сохранить"
           disabled={accessSaveBtn ? false : true}
         >
-          <CheckCircleIcon
-            style={{ fontSize: 25 }}
-            color={accessSaveBtn ? "success" : "action"}
-          />
+          <CheckCircleIcon style={{ fontSize: 25 }} color={accessSaveBtn ? "success" : "action"} />
         </S.CustomizedIconButton>
       </S.Toolbar>
 

@@ -1,3 +1,5 @@
+import { CustomDescendant, ICustomBaseTextElement } from "../types/types";
+
 export function getCurrDateTime(): string {
   const currentDateTime = new Date().toLocaleString(undefined, {
     year: "numeric",
@@ -34,4 +36,8 @@ export function formatDate(dateString: string): string {
   const time = parts[3].trim();
 
   return `${day} ${month} ${year}, ${time}`;
+}
+
+export function isCustomTextElement(node: CustomDescendant): node is ICustomBaseTextElement {
+  return (node as ICustomBaseTextElement).text !== undefined;
 }

@@ -1,17 +1,19 @@
+import { ReactElement } from "react";
 import { Element as SlateElement, BaseElement, BaseText } from "slate";
 
-export type noteContent = Array<{
-  children: Array<{ [key: string]: any }>;
-  type: string;
-  [key: string]: any;
-}>;
+export type CustomDescendant = ICustomBaseTextElement | ICustomBaseElement;
+
+export interface INoteDataForPayloadAction {
+  id: string;
+  content: CustomDescendant[];
+}
 
 export interface INote {
   id: string;
   noteName: string;
   currDateTime: string;
   isSelected: boolean;
-  content: noteContent;
+  content: CustomDescendant[];
 }
 
 export interface IInitialState {
@@ -24,27 +26,32 @@ export interface ICustomSlateElement extends SlateElement {
 }
 
 export interface ICustomBaseElement extends BaseElement {
-  type: string;
+  type?: string;
   align?: any | undefined;
 }
 
 export interface ICustomBaseTextElement extends BaseText {
-  bold: string;
-  code: string;
-  italic: string;
-  underline: string;
+  children?: any;
+  bold?: string;
+  code?: string;
+  italic?: string;
+  underline?: string;
 }
 
 export interface IMarkButtonProps {
   format: string;
-  icon: any;
+  icon: ReactElement;
 }
 
 export interface IBlockButtonProps {
   format: string;
-  icon: any;
+  icon: ReactElement;
 }
 
 export interface IRichTextProps {
   noteId: string;
+}
+
+export interface BaseProps {
+  [key: string]: unknown;
 }
