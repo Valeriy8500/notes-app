@@ -70,9 +70,9 @@ const RichText = ({ noteId }: IRichTextProps) => {
     dispatch(saveNote(noteData));
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter" && event.shiftKey === false) {
-      event.preventDefault();
+  const onEnter = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && e.shiftKey === false) {
+      e.preventDefault();
       onSaveNote();
     }
   };
@@ -113,7 +113,7 @@ const RichText = ({ noteId }: IRichTextProps) => {
         renderLeaf={renderLeaf}
         placeholder="Новая заметка"
         spellCheck
-        onKeyDown={handleKeyDown}
+        onKeyDown={onEnter}
       />
     </Slate>
   );

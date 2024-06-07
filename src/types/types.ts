@@ -18,6 +18,7 @@ export interface INote {
 
 export interface IInitialState {
   elements: INote[];
+  confirmDeleteModalState: boolean;
 }
 
 export interface ICustomSlateElement extends SlateElement {

@@ -3,6 +3,7 @@ import { IInitialState, INote, INoteDataForPayloadAction } from "../../types/typ
 
 const initialState: IInitialState = {
   elements: [],
+  confirmDeleteModalState: false,
 };
 
 export const notesSlice = createSlice({
@@ -30,6 +31,9 @@ export const notesSlice = createSlice({
     },
     deleteNote(state) {
       state.elements = state.elements.filter(item => (item.isSelected ? false : item));
+    },
+    toogleConfirmDeleteModal(state) {
+      state.confirmDeleteModalState = !state.confirmDeleteModalState;
     },
   },
 });
