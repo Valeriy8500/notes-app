@@ -1,8 +1,8 @@
 import { useCallback, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import * as S from "./styles";
 import { useAppDispatch } from "../../redux/hooks";
 import { deleteNote, toogleConfirmDeleteModal } from "../../redux/notes";
+import * as S from "./styles";
 
 export const ConfirmModal = () => {
   const dispatch = useAppDispatch();
@@ -10,7 +10,7 @@ export const ConfirmModal = () => {
   const onDeleteNote = useCallback(() => {
     dispatch(deleteNote());
     dispatch(toogleConfirmDeleteModal());
-  }, []);
+  }, [dispatch]);
 
   const onEscape = useCallback(
     (e: KeyboardEvent) => {
