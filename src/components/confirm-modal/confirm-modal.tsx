@@ -2,6 +2,8 @@ import { useCallback, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAppDispatch } from "../../redux/hooks";
 import { deleteNote, toogleConfirmDeleteModal } from "../../redux/notes";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import * as S from "./styles";
 
 export const ConfirmModal = () => {
@@ -10,6 +12,14 @@ export const ConfirmModal = () => {
   const onDeleteNote = useCallback(() => {
     dispatch(deleteNote());
     dispatch(toogleConfirmDeleteModal());
+    toast.success(`Заметка успешно удалена!`, {
+      position: "bottom-right",
+      autoClose: 1500,
+      hideProgressBar: true,
+      closeOnClick: true,
+      draggable: true
+    }
+    );
   }, [dispatch]);
 
   const onEscape = useCallback(

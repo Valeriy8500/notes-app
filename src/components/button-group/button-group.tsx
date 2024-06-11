@@ -1,4 +1,3 @@
-import * as S from "./styles";
 import AddIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ClipIcon from "@mui/icons-material/FilePresent";
@@ -8,6 +7,7 @@ import { getCurrDateTime } from "../../shared/shared-functions";
 import { addNote, selectNote, toogleConfirmDeleteModal } from "../../redux/notes";
 import { v4 as uuidv4 } from "uuid";
 import { INote } from "../../types/types";
+import * as S from "./styles";
 
 export const ButtonGroup = () => {
   const dispatch = useAppDispatch();
