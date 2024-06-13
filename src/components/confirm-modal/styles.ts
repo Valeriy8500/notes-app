@@ -92,7 +92,7 @@ export const Footer = styled.div`
   background-color: #ffffff;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  padding: 0 40px;
+  padding: 0 60px;
 `;
 
 export const ConfirmButton = styled.button`

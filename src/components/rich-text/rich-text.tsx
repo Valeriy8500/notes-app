@@ -20,6 +20,8 @@ import { Button } from "./components/button";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { saveNote } from "../../redux/notes";
 import { Editor, Transforms, createEditor, Element as SlateElement, BaseEditor } from "slate";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   ICustomSlateElement,
   ICustomBaseElement,
@@ -68,6 +70,13 @@ const RichText = ({ noteId }: IRichTextProps) => {
   const onSaveNote = () => {
     const noteData = { id: noteId, content: value };
     dispatch(saveNote(noteData));
+    toast.success(`Заметка успешно сохранена!`, {
+      position: "bottom-right",
+      autoClose: 1500,
+      hideProgressBar: true,
+      closeOnClick: true,
+      draggable: true
+    });
   };
 
   const onEnter = (e: React.KeyboardEvent) => {
