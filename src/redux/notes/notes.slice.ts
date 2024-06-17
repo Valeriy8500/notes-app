@@ -30,10 +30,20 @@ export const notesSlice = createSlice({
       );
     },
     deleteNote(state) {
-      state.elements = state.elements.filter(item => (item.isSelected ? false : item));
+      state.elements = state.elements.filter(item => item.isSelected ? false : item);
     },
     toogleConfirmDeleteModal(state) {
       state.confirmDeleteModalState = !state.confirmDeleteModalState;
+    },
+    clipNote(state) {
+      const selectedElement = state.elements.find(item => item.isSelected);
+      
+      if (selectedElement) {
+        state.elements = [
+          selectedElement,
+          ...state.elements.filter(item => !item.isSelected)
+        ];
+      }
     },
   },
 });

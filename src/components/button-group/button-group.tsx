@@ -4,7 +4,7 @@ import ClipIcon from "@mui/icons-material/FilePresent";
 import ListIcon from "@mui/icons-material/Checklist";
 import { useAppDispatch } from "../../redux/hooks";
 import { getCurrDateTime } from "../../shared/shared-functions";
-import { addNote, selectNote, toogleConfirmDeleteModal } from "../../redux/notes";
+import { addNote, clipNote, selectNote, toogleConfirmDeleteModal } from "../../redux/notes";
 import { v4 as uuidv4 } from "uuid";
 import { INote } from "../../types/types";
 import * as S from "./styles";
@@ -29,7 +29,9 @@ export const ButtonGroup = () => {
     dispatch(toogleConfirmDeleteModal());
   };
 
-  const onClipNote = () => {};
+  const onClipNote = () => {
+    dispatch(clipNote());
+  };
 
   const onAddList = () => {};
 
