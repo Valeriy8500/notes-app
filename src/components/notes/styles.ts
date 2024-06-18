@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PushPinIcon from '@mui/icons-material/PushPin';
 
 interface NoteProps {
   $isSelected: boolean;
@@ -33,7 +34,17 @@ export const Title = styled.h4`
   text-overflow: ellipsis;
 `;
 
+export const Footer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const DateTime = styled.div`
   width: 100%;
   font-size: small;
+`;
+
+export const PushPin = styled(PushPinIcon)`
+  transform: rotate(45deg);
+  font-size: 20px;
 `;

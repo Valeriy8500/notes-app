@@ -15,12 +15,16 @@ export const Notes = () => {
   return (
     <>
       {notes.map((item: INote) => {
+        console.log('item.isClip: ', item.isClip);
         return (
           <S.Note key={item.id} $isSelected={item.isSelected} onClick={() => onSelectNote(item)}>
             <S.IconBlock></S.IconBlock>
             <S.MainBlock>
               <S.Title>{item.noteName}</S.Title>
-              <S.DateTime>{item.currDateTime}</S.DateTime>
+              <S.Footer>
+                <S.DateTime>{item.currDateTime}</S.DateTime>
+                {item.isClip && <S.PushPin />}
+              </S.Footer>
             </S.MainBlock>
           </S.Note>
         );

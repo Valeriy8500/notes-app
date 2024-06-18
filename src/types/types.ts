@@ -13,12 +13,14 @@ export interface INote {
   noteName: string;
   currDateTime: string;
   isSelected: boolean;
+  isClip: boolean;
   content: CustomDescendant[];
 }
 
 export interface IInitialState {
   elements: INote[];
   confirmDeleteModalState: boolean;
+  idSelectedNotes: string[];
 }
 
 export interface ICustomSlateElement extends SlateElement {

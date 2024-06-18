@@ -4,6 +4,7 @@ import { IInitialState, INote, INoteDataForPayloadAction } from "../../types/typ
 const initialState: IInitialState = {
   elements: [],
   confirmDeleteModalState: false,
+  idSelectedNotes: []
 };
 
 export const notesSlice = createSlice({
@@ -19,6 +20,8 @@ export const notesSlice = createSlice({
           ? { ...item, isSelected: true }
           : { ...item, isSelected: false }
       );
+
+      state.idSelectedNotes = [action.payload.id];
     },
     saveNote(state, action: PayloadAction<INoteDataForPayloadAction>) {
       const newNoteName = action.payload.content[0].children[0].text;
@@ -30,18 +33,18 @@ export const notesSlice = createSlice({
       );
     },
     deleteNote(state) {
-      state.elements = state.elements.filter(item => item.isSelected ? false : item);
+      state.elements = state.elements.filter(item => item.id !== state.idSelectedNotes[0]);
     },
     toogleConfirmDeleteModal(state) {
       state.confirmDeleteModalState = !state.confirmDeleteModalState;
     },
     clipNote(state) {
-      const selectedElement = state.elements.find(item => item.isSelected);
+      const selectedElement = state.elements.find(item => item.id === state.idSelectedNotes[0]);
       
       if (selectedElement) {
         state.elements = [
-          selectedElement,
-          ...state.elements.filter(item => !item.isSelected)
+          {...selectedElement, isClip: true},
+          ...state.elements.filter(item => item.id !== state.idSelectedNotes[0])
         ];
       }
     },

@@ -18,6 +18,7 @@ export const ButtonGroup = () => {
       noteName: "Новая заметка",
       currDateTime: getCurrDateTime(),
       isSelected: true,
+      isClip: false,
       content: [],
     };
 
