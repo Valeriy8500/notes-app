@@ -25,12 +25,24 @@ export const notesSlice = createSlice({
     },
     saveNote(state, action: PayloadAction<INoteDataForPayloadAction>) {
       const newNoteName = action.payload.content[0].children[0].text;
+      const editElement = state.elements.find(item => item.id === action.payload.id);
+    
+      if (editElement) {
+        const updatedElement = { ...editElement, content: action.payload.content, noteName: newNoteName };
 
-      state.elements = state.elements.map(item =>
-        item.id === action.payload.id
-          ? { ...item, content: action.payload.content, noteName: newNoteName }
-          : item
-      );
+        if (updatedElement.isClip) {
+          state.elements = state.elements.map(item =>
+            item.id === action.payload.id
+              ? updatedElement
+              : item
+          );
+        } else {
+          const pinnedNotes = state.elements.filter(item => item.isClip);
+          const unpinnedNotes = state.elements.filter(item => !item.isClip && item.id !== action.payload.id);
+      
+          state.elements = [...pinnedNotes, updatedElement, ...unpinnedNotes];
+        }
+      }
     },
     deleteNote(state) {
       state.elements = state.elements.filter(item => item.id !== state.idSelectedNotes[0]);
@@ -40,12 +52,23 @@ export const notesSlice = createSlice({
     },
     clipNote(state) {
       const selectedElement = state.elements.find(item => item.id === state.idSelectedNotes[0]);
-      
+
       if (selectedElement) {
         state.elements = [
-          {...selectedElement, isClip: true},
+          { ...selectedElement, isClip: true },
           ...state.elements.filter(item => item.id !== state.idSelectedNotes[0])
         ];
+      }
+    },
+    unClipNote(state, action: PayloadAction<string>) {
+      const unClipElement = state.elements.find(item => item.id === action.payload);
+
+      if (unClipElement) {
+        const updatedElement = { ...unClipElement, isClip: false };
+        const pinnedNotes = state.elements.filter(item => item.isClip && item.id !== action.payload);
+        const unpinnedNotes = state.elements.filter(item => !item.isClip);
+    
+        state.elements = [...pinnedNotes, updatedElement, ...unpinnedNotes];
       }
     },
   },

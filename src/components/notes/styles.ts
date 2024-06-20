@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import PushPinIcon from '@mui/icons-material/PushPin';
+import IconButton from "@mui/material/IconButton";
 
 interface NoteProps {
   $isSelected: boolean;
@@ -42,6 +43,10 @@ export const Footer = styled.div`
 export const DateTime = styled.div`
   width: 100%;
   font-size: small;
+`;
+
+export const CustomizedIconButton = styled(IconButton)`
+  padding: 0;
 `;
 
 export const PushPin = styled(PushPinIcon)`
