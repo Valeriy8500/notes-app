@@ -4,6 +4,7 @@ import { IInitialState, INote, INoteDataForPayloadAction } from "../../types/typ
 const initialState: IInitialState = {
   elements: [],
   confirmDeleteModalState: false,
+  colorPaletteState: false,
   idSelectedNotes: []
 };
 
@@ -26,7 +27,7 @@ export const notesSlice = createSlice({
     saveNote(state, action: PayloadAction<INoteDataForPayloadAction>) {
       const newNoteName = action.payload.content[0].children[0].text;
       const editElement = state.elements.find(item => item.id === action.payload.id);
-    
+
       if (editElement) {
         const updatedElement = { ...editElement, content: action.payload.content, noteName: newNoteName };
 
@@ -39,7 +40,7 @@ export const notesSlice = createSlice({
         } else {
           const pinnedNotes = state.elements.filter(item => item.isClip);
           const unpinnedNotes = state.elements.filter(item => !item.isClip && item.id !== action.payload.id);
-      
+
           state.elements = [...pinnedNotes, updatedElement, ...unpinnedNotes];
         }
       }
@@ -67,8 +68,24 @@ export const notesSlice = createSlice({
         const updatedElement = { ...unClipElement, isClip: false };
         const pinnedNotes = state.elements.filter(item => item.isClip && item.id !== action.payload);
         const unpinnedNotes = state.elements.filter(item => !item.isClip);
-    
+
         state.elements = [...pinnedNotes, updatedElement, ...unpinnedNotes];
+      }
+    },
+    toogleColorPalette(state) {
+      state.colorPaletteState = !state.colorPaletteState;
+    },
+    addNoteColor(state, action: PayloadAction<string>) {
+      const editElement = state.elements.find(item => item.id === state.idSelectedNotes[0]);
+
+      if (editElement) {
+        const updatedElement = { ...editElement, bg: action.payload };
+
+        state.elements = state.elements.map(item =>
+          item.id === updatedElement.id
+            ? updatedElement
+            : item
+        );
       }
     },
   },

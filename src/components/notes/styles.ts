@@ -38,6 +38,7 @@ export const Title = styled.h4`
 export const Footer = styled.div`
   display: flex;
   justify-content: space-between;
+  height: 18px;
 `;
 
 export const DateTime = styled.div`
@@ -51,5 +52,5 @@ export const CustomizedIconButton = styled(IconButton)`
 
 export const PushPin = styled(PushPinIcon)`
   transform: rotate(45deg);
-  font-size: 20px;
+  font-size: 18px;
 `;

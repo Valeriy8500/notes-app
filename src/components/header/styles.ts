@@ -6,4 +6,12 @@ export const Header = styled.header`
   background-color: rgba(215, 215, 215, 1);
   display: flex;
   align-items: center;
+  justify-content: space-between;
+`;
+
+export const MainGroup = styled.div`
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;

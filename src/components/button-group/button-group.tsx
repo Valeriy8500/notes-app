@@ -19,6 +19,7 @@ export const ButtonGroup = () => {
       currDateTime: getCurrDateTime(),
       isSelected: true,
       isClip: false,
+      bg: "white",
       content: [],
     };
 
@@ -37,7 +38,7 @@ export const ButtonGroup = () => {
   const onAddList = () => {};
 
   return (
-    <>
+    <S.ButtonGroup>
       <S.CustomizedIconButton onClick={onAddNote} title="Добавить">
         <AddIcon />
       </S.CustomizedIconButton>
@@ -50,6 +51,6 @@ export const ButtonGroup = () => {
       <S.CustomizedIconButton onClick={onAddList} title="Добавить список">
         <ListIcon />
       </S.CustomizedIconButton>
-    </>
+    </S.ButtonGroup>
   );
 };

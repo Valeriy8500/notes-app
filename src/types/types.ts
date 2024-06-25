@@ -14,12 +14,14 @@ export interface INote {
   currDateTime: string;
   isSelected: boolean;
   isClip: boolean;
+  bg: string;
   content: CustomDescendant[];
 }
 
 export interface IInitialState {
   elements: INote[];
   confirmDeleteModalState: boolean;
+  colorPaletteState: boolean;
   idSelectedNotes: string[];
 }
 

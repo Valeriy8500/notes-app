@@ -9,5 +9,7 @@ export const {
   deleteNote, 
   toogleConfirmDeleteModal, 
   clipNote, 
-  unClipNote 
+  unClipNote,
+  toogleColorPalette,
+  addNoteColor
 } = notesSlice.actions;
