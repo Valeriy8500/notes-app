@@ -16,26 +16,38 @@ export const Notes = () => {
     dispatch(unClipNote(id));
   };
 
+  const colorBlockBackgroundColor = (item: INote) => {
+    if (item.bg !== "default") {
+      return { backgroundColor: item.bg };
+    }
+    if (item.bg === "default" && item.isSelected) {
+      return { backgroundColor: "#e1e1df" };
+    }
+    if (item.bg === "default" && !item.isSelected) {
+      return { backgroundColor: "#fff" };
+    }
+  };
+
   return (
     <>
       {notes.map((item: INote) => {
         return (
           <S.Note key={item.id} $isSelected={item.isSelected} onClick={() => onSelectNote(item)}>
-            <S.IconBlock></S.IconBlock>
+            <S.IconBlock />
+
             <S.MainBlock>
               <S.Title>{item.noteName}</S.Title>
               <S.Footer>
                 <S.DateTime>{item.currDateTime}</S.DateTime>
-                {item.isClip &&
-                  <S.CustomizedIconButton
-                    onClick={() => onUnclipNote(item.id)}
-                    title="Открепить"
-                  >
+                {item.isClip && (
+                  <S.CustomizedIconButton onClick={() => onUnclipNote(item.id)} title="Открепить">
                     <S.PushPin />
                   </S.CustomizedIconButton>
-                }
+                )}
               </S.Footer>
             </S.MainBlock>
+
+            <S.ColorBlock style={colorBlockBackgroundColor(item)} />
           </S.Note>
         );
       })}

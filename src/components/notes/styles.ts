@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import PushPinIcon from '@mui/icons-material/PushPin';
+import PushPinIcon from "@mui/icons-material/PushPin";
 import IconButton from "@mui/material/IconButton";
 
 interface NoteProps {
@@ -22,9 +22,9 @@ export const IconBlock = styled.div`
 `;
 
 export const MainBlock = styled.div`
-  width: 90%;
+  width: 83%;
   border-bottom: 1px solid rgba(215, 215, 215, 1);
-  padding: 10px 20px 10px 0;
+  padding: 10px 10px 10px 0;
 `;
 
 export const Title = styled.h4`
@@ -53,4 +53,9 @@ export const CustomizedIconButton = styled(IconButton)`
 export const PushPin = styled(PushPinIcon)`
   transform: rotate(45deg);
   font-size: 18px;
+`;
+
+export const ColorBlock = styled.div`
+  width: 7%;
+  border-bottom: 1px solid rgba(215, 215, 215, 1);
 `;

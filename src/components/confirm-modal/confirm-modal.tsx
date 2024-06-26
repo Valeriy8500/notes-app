@@ -2,8 +2,8 @@ import { useCallback, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAppDispatch } from "../../redux/hooks";
 import { deleteNote, toogleConfirmDeleteModal } from "../../redux/notes";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import * as S from "./styles";
 
 export const ConfirmModal = () => {
@@ -17,9 +17,8 @@ export const ConfirmModal = () => {
       autoClose: 1500,
       hideProgressBar: true,
       closeOnClick: true,
-      draggable: true
-    }
-    );
+      draggable: true,
+    });
   }, [dispatch]);
 
   const onEscape = useCallback(

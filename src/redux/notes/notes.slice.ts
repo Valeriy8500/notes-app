@@ -5,7 +5,7 @@ const initialState: IInitialState = {
   elements: [],
   confirmDeleteModalState: false,
   colorPaletteState: false,
-  idSelectedNotes: []
+  idSelectedNotes: [],
 };
 
 export const notesSlice = createSlice({
@@ -29,17 +29,21 @@ export const notesSlice = createSlice({
       const editElement = state.elements.find(item => item.id === action.payload.id);
 
       if (editElement) {
-        const updatedElement = { ...editElement, content: action.payload.content, noteName: newNoteName };
+        const updatedElement = {
+          ...editElement,
+          content: action.payload.content,
+          noteName: newNoteName,
+        };
 
         if (updatedElement.isClip) {
           state.elements = state.elements.map(item =>
-            item.id === action.payload.id
-              ? updatedElement
-              : item
+            item.id === action.payload.id ? updatedElement : item
           );
         } else {
           const pinnedNotes = state.elements.filter(item => item.isClip);
-          const unpinnedNotes = state.elements.filter(item => !item.isClip && item.id !== action.payload.id);
+          const unpinnedNotes = state.elements.filter(
+            item => !item.isClip && item.id !== action.payload.id
+          );
 
           state.elements = [...pinnedNotes, updatedElement, ...unpinnedNotes];
         }
@@ -57,7 +61,7 @@ export const notesSlice = createSlice({
       if (selectedElement) {
         state.elements = [
           { ...selectedElement, isClip: true },
-          ...state.elements.filter(item => item.id !== state.idSelectedNotes[0])
+          ...state.elements.filter(item => item.id !== state.idSelectedNotes[0]),
         ];
       }
     },
@@ -66,7 +70,9 @@ export const notesSlice = createSlice({
 
       if (unClipElement) {
         const updatedElement = { ...unClipElement, isClip: false };
-        const pinnedNotes = state.elements.filter(item => item.isClip && item.id !== action.payload);
+        const pinnedNotes = state.elements.filter(
+          item => item.isClip && item.id !== action.payload
+        );
         const unpinnedNotes = state.elements.filter(item => !item.isClip);
 
         state.elements = [...pinnedNotes, updatedElement, ...unpinnedNotes];
@@ -82,9 +88,7 @@ export const notesSlice = createSlice({
         const updatedElement = { ...editElement, bg: action.payload };
 
         state.elements = state.elements.map(item =>
-          item.id === updatedElement.id
-            ? updatedElement
-            : item
+          item.id === updatedElement.id ? updatedElement : item
         );
       }
     },

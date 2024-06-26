@@ -19,7 +19,7 @@ export const ButtonGroup = () => {
       currDateTime: getCurrDateTime(),
       isSelected: true,
       isClip: false,
-      bg: "white",
+      bg: "default",
       content: [],
     };
 
