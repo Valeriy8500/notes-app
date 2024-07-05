@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import PushPinIcon from "@mui/icons-material/PushPin";
+import PushPin from "@mui/icons-material/PushPin";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import IconButton from "@mui/material/IconButton";
 
 interface NoteProps {
@@ -17,12 +18,24 @@ export const Note = styled.div<NoteProps>`
   }
 `;
 
-export const IconBlock = styled.div`
-  width: 10%;
+export const HighPriorityBlock = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15%;
+`;
+
+export const HighPriorityIconButton = styled(IconButton)`
+  padding: 0;
+`;
+
+export const HighPriorityIcon = styled(PriorityHighIcon)`
+  font-size: 28px;
+  color: red;
 `;
 
 export const MainBlock = styled.div`
-  width: 83%;
+  width: 78%;
   border-bottom: 1px solid rgba(215, 215, 215, 1);
   padding: 10px 10px 10px 0;
 `;
@@ -46,11 +59,11 @@ export const DateTime = styled.div`
   font-size: small;
 `;
 
-export const CustomizedIconButton = styled(IconButton)`
+export const PushPinIconButton = styled(IconButton)`
   padding: 0;
 `;
 
-export const PushPin = styled(PushPinIcon)`
+export const PushPinIcon = styled(PushPin)`
   transform: rotate(45deg);
   font-size: 18px;
 `;

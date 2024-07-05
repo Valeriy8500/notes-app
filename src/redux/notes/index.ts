@@ -12,4 +12,5 @@ export const {
   unClipNote,
   toogleColorPalette,
   addNoteColor,
+  toogleHighPriority,
 } = notesSlice.actions;

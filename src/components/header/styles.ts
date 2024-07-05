@@ -11,7 +11,7 @@ export const Header = styled.header`
 `;
 
 export const MainGroup = styled.div`
-  width: 40%;
+  width: 45%;
   display: flex;
   align-items: center;
   justify-content: space-between;

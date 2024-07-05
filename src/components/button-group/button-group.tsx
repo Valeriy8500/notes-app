@@ -2,15 +2,25 @@ import AddIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ClipIcon from "@mui/icons-material/FilePresent";
 import ListIcon from "@mui/icons-material/Checklist";
-import { useAppDispatch } from "../../redux/hooks";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getCurrDateTime } from "../../shared/shared-functions";
-import { addNote, clipNote, selectNote, toogleConfirmDeleteModal } from "../../redux/notes";
+import {
+  addNote,
+  clipNote,
+  selectNote,
+  toogleConfirmDeleteModal,
+  toogleHighPriority,
+} from "../../redux/notes";
 import { v4 as uuidv4 } from "uuid";
 import { INote } from "../../types/types";
+import { selectoridSelectedNote, selectorNotes } from "../../redux/selectors";
 import * as S from "./styles";
 
 export const ButtonGroup = () => {
   const dispatch = useAppDispatch();
+  const notes = useAppSelector(selectorNotes);
+  const idSelectedNote = useAppSelector(selectoridSelectedNote);
 
   const onAddNote = () => {
     const newNote: INote = {
@@ -19,6 +29,7 @@ export const ButtonGroup = () => {
       currDateTime: getCurrDateTime(),
       isSelected: true,
       isClip: false,
+      highPriority: false,
       bg: "default",
       content: [],
     };
@@ -35,7 +46,21 @@ export const ButtonGroup = () => {
     dispatch(clipNote());
   };
 
+  const onPrioritizeNote = () => {
+    dispatch(toogleHighPriority(idSelectedNote));
+  };
+
   const onAddList = () => {};
+
+  const isDisabledPriorityBtn = () => {
+    const notePriority = notes.filter(i => i.id === idSelectedNote)[0]?.highPriority;
+
+    if (idSelectedNote && notePriority) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   return (
     <S.ButtonGroup>
@@ -47,6 +72,13 @@ export const ButtonGroup = () => {
       </S.CustomizedIconButton>
       <S.CustomizedIconButton onClick={onClipNote} title="Закрепить">
         <ClipIcon />
+      </S.CustomizedIconButton>
+      <S.CustomizedIconButton
+        onClick={onPrioritizeNote}
+        disabled={isDisabledPriorityBtn()}
+        title="Высокий приоритет"
+      >
+        <PriorityHighIcon />
       </S.CustomizedIconButton>
       <S.CustomizedIconButton onClick={onAddList} title="Добавить список">
         <ListIcon />

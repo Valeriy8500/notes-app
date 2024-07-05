@@ -14,6 +14,7 @@ export interface INote {
   currDateTime: string;
   isSelected: boolean;
   isClip: boolean;
+  highPriority: boolean;
   bg: string;
   content: CustomDescendant[];
 }

@@ -92,5 +92,10 @@ export const notesSlice = createSlice({
         );
       }
     },
+    toogleHighPriority(state, action: PayloadAction<string>) {
+      state.elements = state.elements.map(item =>
+        item.id === action.payload ? { ...item, highPriority: !item.highPriority } : item
+      );
+    },
   },
 });
