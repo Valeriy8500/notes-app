@@ -4,7 +4,9 @@ import ClipIcon from "@mui/icons-material/FilePresent";
 import ListIcon from "@mui/icons-material/Checklist";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { getCurrDateTime } from "../../shared/shared-functions";
+import { v4 as uuidv4 } from "uuid";
+import { INote } from "../../types/types";
+import { selectoridSelectedNote, selectorNotes } from "../../redux/selectors";
 import {
   addNote,
   clipNote,
@@ -12,9 +14,6 @@ import {
   toogleConfirmDeleteModal,
   toogleHighPriority,
 } from "../../redux/notes";
-import { v4 as uuidv4 } from "uuid";
-import { INote } from "../../types/types";
-import { selectoridSelectedNote, selectorNotes } from "../../redux/selectors";
 import * as S from "./styles";
 
 export const ButtonGroup = () => {
@@ -26,7 +25,8 @@ export const ButtonGroup = () => {
     const newNote: INote = {
       id: uuidv4(),
       noteName: "Новая заметка",
-      currDateTime: getCurrDateTime(),
+      currDateTime: null,
+      lastEditDateTime: null,
       isSelected: true,
       isClip: false,
       highPriority: false,

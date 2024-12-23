@@ -8,11 +8,16 @@ export const NoteEditor = styled.div`
   padding: 0 20px;
 `;
 
-export const DateTime = styled.h3`
+export const DateTimeBlock = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
+export const DateTime = styled.div`
   align-self: center;
-  margin: 5px 0 0 0;
+  margin: 5px 0 0 10px;
   color: #b8b6b6;
   font-size: small;
 `;
-
-export const Title = styled.h3``;

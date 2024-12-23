@@ -11,7 +11,8 @@ export interface INoteDataForPayloadAction {
 export interface INote {
   id: string;
   noteName: string;
-  currDateTime: string;
+  currDateTime: string | null;
+  lastEditDateTime: string | null;
   isSelected: boolean;
   isClip: boolean;
   highPriority: boolean;

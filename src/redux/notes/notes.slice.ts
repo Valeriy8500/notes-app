@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IInitialState, INote, INoteDataForPayloadAction } from "../../types/types";
+import { getCurrDateTime } from "../../shared/shared-functions";
 
 const initialState: IInitialState = {
   elements: [],
@@ -29,10 +30,14 @@ export const notesSlice = createSlice({
       const editElement = state.elements.find(item => item.id === action.payload.id);
 
       if (editElement) {
+        const isContentChanged = JSON.stringify(editElement.content) !== JSON.stringify(action.payload.content);
+
         const updatedElement = {
           ...editElement,
           content: action.payload.content,
           noteName: newNoteName,
+          currDateTime: editElement.currDateTime ? editElement.currDateTime : getCurrDateTime(),
+          lastEditDateTime: isContentChanged && editElement.currDateTime ? getCurrDateTime() : null
         };
 
         if (updatedElement.isClip) {
