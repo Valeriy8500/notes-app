@@ -2,7 +2,7 @@ import styled from "styled-components";
 import IconButton from "@mui/material/IconButton";
 
 export const Toolbar = styled.div`
-  margin-top: 10px;
+  margin-top: 15px;
   margin-bottom: 15px;
   display: flex;
   align-items: center;

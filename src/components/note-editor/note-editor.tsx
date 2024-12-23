@@ -13,7 +13,8 @@ export const NoteEditor = () => {
       {notes.map((item: INote) => {
         return item.isSelected ? (
           <S.NoteEditor key={item.id}>
-            <S.DateTime>{formatDate(item.currDateTime)}</S.DateTime>
+            <S.DateTime>Создано: {formatDate(item.currDateTime)}</S.DateTime>
+            <S.DateTime>Последнее изменение: {formatDate(item.currDateTime)}</S.DateTime>
             <RichText noteId={item.id} />
           </S.NoteEditor>
         ) : null;

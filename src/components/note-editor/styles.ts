@@ -10,7 +10,7 @@ export const NoteEditor = styled.div`
 
 export const DateTime = styled.h3`
   align-self: center;
-  margin: 10px 0;
+  margin: 5px 0 0 0;
   color: #b8b6b6;
   font-size: small;
 `;
